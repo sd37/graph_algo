@@ -10,7 +10,7 @@ using namespace std;
 class Graph
 {
         unsigned int V;
-        list<int> *adj;
+        list<unsigned int> *adj;
         void DfsUtil(unsigned int v,bool visited[]);
     
     public:
@@ -23,7 +23,7 @@ class Graph
 Graph::Graph(unsigned int V)
 {
     this->V = V;
-    this->adj = new list<int>[V];
+    this->adj = new list<unsigned int>[V];
 }
 
 void Graph::addEdge(unsigned int s, unsigned int d)
@@ -47,7 +47,7 @@ void Graph::DfsUtil(unsigned int v,bool visited[])
 
     printf("%u ",v);
     
-    list<int>::iterator it;
+    list<unsigned int>::iterator it;
     
     for(it = this->adj[v].begin(); it != this->adj[v].end(); it++)
     {
