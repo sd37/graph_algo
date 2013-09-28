@@ -90,22 +90,25 @@ void Graph::DFSComplete()
 int main()
 {
     fflush(stdout);
-    Graph g(4);
-    /*
+    
+    
     Graph g(3);
-    g.addEdge(2,1);
-    g.addEdge(2,0);
     g.addEdge(0,1);
-    */
+    g.addEdge(0,2);
+    g.addEdge(1,2);
+    g.addEdge(2,1);
+    
+
+/*    
+    Graph g(4);
     g.addEdge(0,1);
     g.addEdge(0,2);
     g.addEdge(1,2);
     g.addEdge(2,0);
     g.addEdge(2,3);
     g.addEdge(3,3);
-    
-    printf("dfs from vertex 2:\n");
-    g.DFS(2);
+*/  
+    g.DFS(0);
     
     printf("\nall nodes in the Graph:\n");
     g.DFSComplete();
