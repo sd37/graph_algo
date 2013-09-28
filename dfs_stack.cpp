@@ -47,6 +47,7 @@ void Graph::DfsUtil(unsigned int v,bool visited[])
     stack<unsigned int> dfsStack;
 
     dfsStack.push(v);
+    visited[v] = true;
 
     while(!dfsStack.empty())
     {
