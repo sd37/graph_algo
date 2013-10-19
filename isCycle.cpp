@@ -19,7 +19,7 @@ class Graph
     
     public:
         Graph(unsigned int V);
-        bool isCycle(unsigned int v);
+        bool isCycle();
         void addEdge(unsigned int s,unsigned int d);
 };
 
@@ -34,56 +34,59 @@ void Graph::addEdge(unsigned int s, unsigned int d)
     this->adj[s].push_back(d);
 }
 
-bool Graph::isCycle(unsigned int v)
-{
-    set<unsigned int> visited;
-    set<unsigned int> recStack;
-   
-    visited.clear();
-    recStack.clear();
-    return this->isCycleUtil(v,visited,recStack);
-}
-
 bool Graph::isCycleUtil(unsigned int v,set<unsigned int>& visited,set<unsigned int>& recStack)
 {
-    stack<unsigned int> dfsStack;
-
-    dfsStack.push(v);
-    recStack.insert(v);
-
-    while(!dfsStack.empty())
+    if(!present(visited,v))
     {
-        unsigned int vv = dfsStack.top();
-        visited.insert(vv);
-        printf("%u ",vv);
-        recStack.erase(vv);
-        dfsStack.pop();
-        
-        list<unsigned int>::iterator it;
-        for(it = adj[vv].begin(); it != adj[vv].end(); it++)
-        {
-            if(present(recStack,*it))
-                return true;
+        visited.insert(v);
+        recStack.insert(v);
 
-            if(!present(visited,*it) && !present(recStack,*it))
-            {
-                dfsStack.push(*it);
-                recStack.insert(*it);
-            }    
+        list<unsigned int>::iterator i;
+        for(i = adj[v].begin(); i != adj[v].end(); i++)
+        {
+            if(!present(visited,*i) && isCycleUtil(*i, visited, recStack) )
+                return true;
+            
+            else if(present(recStack,*i))
+                return true;
         }
+    }
+
+    set<unsigned int>::iterator it = recStack.find(v); 
     
+    if(it != recStack.end())
+        recStack.erase(it);
+
+    return false;
+}
+
+bool Graph::isCycle()
+{
+    // Returns true if the graph contains a cycle, else false
+    
+    //Mark all vertices as not visited and not part of recursion
+    //stack
+    
+    set<unsigned int> visited;
+    set<unsigned int> recStack;
+    
+    //Call recursive helper function to detect cycle in different
+    //DFS Trees.
+    
+    for (unsigned int i = 0; i < this->V; i++)
+    {
+        if(isCycleUtil(i,visited,recStack))
+            return true;
     }
 
     return false;
-
 }
-
 int main()
 {
     fflush(stdout);
     Graph g(3);
     g.addEdge(0,1);
-    g.addEdge(0,2);
+    //g.addEdge(2,0);
     g.addEdge(1,2);
     //g.addEdge(2,1);
 
@@ -97,7 +100,7 @@ int main()
     g.addEdge(2,3);
     g.addEdge(3,3);
     */
-    if(g.isCycle(0))
+    if(g.isCycle())
         printf("yes");
     else
         printf("no");
