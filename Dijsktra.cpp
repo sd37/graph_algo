@@ -72,9 +72,9 @@ map<v,d> Graph::dijkstra(int src)
         {
            if(!present(closed,it->first))
            {
-               //use the extracted min to calculate update the distances of the neighbouring nodes.
-               //this can done NOT replacing the element but just inserting the element pair into the heap.
-               //this may create redundancy but does not effect performance by much
+               //use the extracted min to update the distances of the neighbouring nodes.
+               //this can be done NOT replacing the element but just inserting the element pair into the heap.
+               //this may create redundancy but does not effect the performance by much
               
                pq.push(make_pair(it->second + dist,it->first));
            }
