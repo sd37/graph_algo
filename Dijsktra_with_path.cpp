@@ -27,9 +27,11 @@ namespace Print
             s = s + " " + to_string(mp[vt].second);
             vt = mp[vt].second;
         }
-    reverse(s.begin(),s.end());
-    return s;
+    
+        reverse(s.begin(),s.end());
+        return s;
     }
+    
     void printMap(map<v,pair<d,parent> > &mp)
     {
        map<v,pair<d,parent> >::iterator it;
