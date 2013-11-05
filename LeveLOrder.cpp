@@ -20,8 +20,10 @@ class Tree
 {
         unsigned int V;
         struct TreeNode* root;
+        void PrintLevel(struct TreeNode* root,int l);
     public:
         Tree();
+        int height(struct TreeNode*);
         void levelOrderRec();
         void levelOrderQueue();
         struct TreeNode* addNode(uint32_t val,struct TreeNode* left , struct TreeNode* right);
@@ -78,6 +80,38 @@ void Tree::levelOrderQueue()
 
 }
 
+int Tree::height(struct TreeNode*root)
+{
+    if(root == NULL)
+        return 0;
+
+    return 1 + max(height(root->left),height(root->right));
+
+}
+
+void Tree::PrintLevel(struct TreeNode*root,int l)
+{
+    if(l == 1)
+    {
+        if(root)
+            cout << root->data << " ";
+    }
+    else if(l > 1 )
+    {
+        PrintLevel(root->left,l-1);
+        PrintLevel(root->right,l-1);
+    }
+}
+
+void Tree::levelOrderRec()
+{
+   int h = height(this->root);
+
+   for(int i = 1; i <= h; i++)
+   {
+       PrintLevel(this->root,i);
+   }
+}
 
 int main()
 {
@@ -101,5 +135,7 @@ int main()
     
     tr.levelOrderQueue(); 
     printf("\n");
+    tr.levelOrderRec();
+    cout << endl;
     return 0;
 }
