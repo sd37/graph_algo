@@ -37,27 +37,29 @@ void Graph::addEdge(unsigned int s, unsigned int d)
 bool Graph::isCycleUtil(unsigned int v,set<unsigned int>& visited,set<unsigned int>& recStack)
 {
     if(!present(visited,v))
-    {
-        visited.insert(v);
-        recStack.insert(v);
+        return false;
 
-        list<unsigned int>::iterator i;
-        for(i = adj[v].begin(); i != adj[v].end(); i++)
-        {
-            if(!present(visited,*i) && isCycleUtil(*i, visited, recStack) )
-                return true;
+    visited.insert(v);
+    recStack.insert(v);
+
+    list<unsigned int>::iterator i;
+    
+    for(i = adj[v].begin(); i != adj[v].end(); i++)
+    {
+        if(!present(visited,*i) && isCycleUtil(*i, visited, recStack) )
+            return true;
             
-            else if(present(recStack,*i))
-                return true;
-        }
+        else if(present(recStack,*i))
+            return true;
     }
+
 
     set<unsigned int>::iterator it = recStack.find(v); 
     
     if(it != recStack.end())
         recStack.erase(it);
 
-    return false;
+    return false;  
 }
 
 bool Graph::isCycle()
